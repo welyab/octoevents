@@ -1,6 +1,6 @@
-package com.welyab.misc.octoeventos
+package com.welyab.misc.octoevents
 
-import com.welyab.misc.octoeventos.data.repository.EventRepository
+import com.welyab.misc.octoevents.services.EventService
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder
 import org.jetbrains.exposed.sql.Database
@@ -18,7 +18,8 @@ fun main(args: Array<String>) {
     app.get("/"){ctx -> ctx.result("It's work!")}
     app.routes{
         ApiBuilder.post("/github/event") {ctx ->
-            EventRepository().save(ctx.body())
+            EventService().saveEvent(ctx.body())
+            ctx.status(202)
         }
     }
 }
